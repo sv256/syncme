@@ -1,5 +1,7 @@
 #if defined(USE_BORINGSSL)
 
+#include <Syncme/Sockets/OsslCompat.h>
+
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 

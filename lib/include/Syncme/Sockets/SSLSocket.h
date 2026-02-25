@@ -2,6 +2,8 @@
 
 #include <Syncme/Api.h>
 #include <Syncme/Sockets/Socket.h>
+#include <Syncme/Sockets/OsslCompat.h>
+
 #include <openssl/ssl.h>
 
 namespace Syncme

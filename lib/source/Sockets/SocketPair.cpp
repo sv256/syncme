@@ -1,5 +1,11 @@
 #include <cassert>
 
+#include <Syncme/Sockets/API.h>
+
+#if defined(_WIN32)
+#include <Windows.h>
+#endif
+
 #include <Syncme/Logger/Log.h>
 #include <Syncme/Sleep.h>
 #include <Syncme/Sockets/BIOSocket.h>

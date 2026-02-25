@@ -2,6 +2,8 @@
 
 #include <mutex>
 
+#include <Syncme/Sockets/OsslCompat.h>
+
 #include <openssl/ssl.h>
 
 #include <Syncme/Api.h>

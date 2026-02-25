@@ -2,6 +2,8 @@
 
 #if defined(USE_BORINGSSL)
 
+#include <Syncme/Sockets/OsslCompat.h>
+
 #include <openssl/bio.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
@@ -14,6 +16,12 @@ namespace
     Syncme::ClientHelloInfo* Out = nullptr;
     std::vector<std::vector<uint8_t>>* Packets = nullptr;
   };
+
+  static int HelloCtxIndex()
+  {
+    static int idx = SSL_CTX_get_ex_new_index(0, nullptr, nullptr, nullptr, nullptr);
+    return idx;
+  }
 
   static void MsgCallback(
     int write_p
@@ -31,7 +39,7 @@ namespace
       return;
     }
 
-    // Capture only inbound (client->server) raw bytes before ClientHello is processed.
+    // Capture only inbound (client->server) raw bytes.
     if(write_p)
     {
       return;
@@ -39,14 +47,20 @@ namespace
 
     const uint8_t* p = reinterpret_cast<const uint8_t*>(buf);
     ctx->Packets->emplace_back(p, p + len);
+
   }
 
   static ssl_select_cert_result_t SelectCertCallback(
     const SSL_CLIENT_HELLO* client_hello
-    , void* arg
   )
   {
-    HelloCtx* ctx = reinterpret_cast<HelloCtx*>(arg);
+    if(!client_hello || !client_hello->ssl)
+    {
+      return ssl_select_cert_error;
+    }
+
+    SSL_CTX* ssl_ctx = SSL_get_SSL_CTX(client_hello->ssl);
+    HelloCtx* ctx = ssl_ctx ? reinterpret_cast<HelloCtx*>(SSL_CTX_get_ex_data(ssl_ctx, HelloCtxIndex())) : nullptr;
     if(!ctx || !ctx->Out)
     {
       return ssl_select_cert_error;
@@ -181,7 +195,8 @@ namespace Syncme
     hello.Out = &out;
     hello.Packets = packets;
 
-    SSL_CTX_set_select_certificate_cb(ctx, SelectCertCallback, &hello);
+    SSL_CTX_set_ex_data(ctx, HelloCtxIndex(), &hello);
+    SSL_CTX_set_select_certificate_cb(ctx, SelectCertCallback);
     SSL_CTX_set_msg_callback(ctx, MsgCallback);
     SSL_CTX_set_msg_callback_arg(ctx, &hello);
 

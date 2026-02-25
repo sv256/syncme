@@ -1,4 +1,6 @@
 #include <cassert>
+#include <Syncme/Sockets/OsslCompat.h>
+
 #include <openssl/err.h>
 
 #include <Syncme/Logger/Log.h>
