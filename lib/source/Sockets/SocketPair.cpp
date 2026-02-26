@@ -1,6 +1,9 @@
 #include <cassert>
 
 #include <Syncme/Sockets/API.h>
+#include <Syncme/Sockets/OsslCompat.h>
+#include <openssl/ssl.h>
+#include <openssl/bio.h>
 
 #if defined(_WIN32)
 #include <Windows.h>

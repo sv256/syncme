@@ -2,6 +2,7 @@
 #include <Syncme/Sockets/OsslCompat.h>
 
 #include <openssl/err.h>
+#include <openssl/ssl.h>
 
 #include <Syncme/Logger/Log.h>
 #include <Syncme/Sockets/SocketPair.h>

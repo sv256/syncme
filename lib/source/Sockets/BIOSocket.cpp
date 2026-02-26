@@ -3,6 +3,7 @@
 #include <Syncme/Logger/Log.h>
 #include <Syncme/Sockets/API.h>
 #include <Syncme/Sockets/BIOSocket.h>
+#include <openssl/bio.h>
 #include <Syncme/Sockets/SocketPair.h>
 #include <Syncme/TickCount.h>
 

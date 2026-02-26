@@ -34,3 +34,8 @@
     #undef max
   #endif
 #endif
+
+// Forward declarations for OpenSSL/BoringSSL opaque types.
+typedef struct ssl_st SSL;
+typedef struct ssl_ctx_st SSL_CTX;
+typedef struct bio_st BIO;

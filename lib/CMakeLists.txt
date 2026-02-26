@@ -10,7 +10,7 @@ else()
 endif()
 
 
-target_include_directories(syncme PUBLIC
+target_include_directories(syncme PRIVATE
   ${ALLSTAT_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${LOGME_INCLUDE_DIR}
