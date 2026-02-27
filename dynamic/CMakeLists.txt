@@ -27,7 +27,8 @@ target_include_directories(syncmed PRIVATE
 )
 
 target_compile_definitions(syncmed PRIVATE _SYNCME_DLL_BUILD_ _WINSOCK_DEPRECATED_NO_WARNINGS)
-target_link_libraries(syncmed LINK_PUBLIC ${LOGME_LIBRARIES} ${_ssl_libraries} ${LOGME_LIB} ${ALLSTAT_LIB})
+target_link_libraries(syncmed LINK_PUBLIC ${LOGME_LIBRARIES} ${LOGME_LIB} ${ALLSTAT_LIB})
+target_link_libraries(syncmed PRIVATE ${_ssl_libraries})
 
 if(NOT WIN32)
   target_compile_options(syncmed PRIVATE -fPIC -fvisibility=default)
