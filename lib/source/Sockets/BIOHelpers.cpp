@@ -1,3 +1,5 @@
+#include <openssl/bio.h>
+
 #include <Syncme/Sockets/BIOHelpers.h>
 #include <Syncme/Sockets/BIOSocket.h>
 
