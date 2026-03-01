@@ -20,6 +20,10 @@ target_include_directories(syncme PRIVATE
 target_compile_definitions(syncme PRIVATE SYNCME_BUILD)
 target_compile_definitions(syncme PRIVATE _SINCME_STATIC_BUILD_)
 
+if(USE_BORINGSSL)
+  target_compile_definitions(syncme PRIVATE ${BORINGSSL_COMPILE_DEFINITIONS})
+endif()
+
 if(USE_ALLSTAT)
   target_compile_definitions(syncme PUBLIC USE_ALLSTAT)
 endif()
