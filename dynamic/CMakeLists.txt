@@ -27,6 +27,9 @@ target_include_directories(syncmed PRIVATE
 )
 
 target_compile_definitions(syncmed PRIVATE _SYNCME_DLL_BUILD_ _WINSOCK_DEPRECATED_NO_WARNINGS)
+if(USE_BORINGSSL)
+  target_compile_definitions(syncmed PRIVATE ${BORINGSSL_COMPILE_DEFINITIONS})
+endif()
 target_link_libraries(syncmed LINK_PUBLIC ${LOGME_LIBRARIES} ${LOGME_LIB} ${ALLSTAT_LIB})
 target_link_libraries(syncmed PRIVATE ${_ssl_libraries})
 
